@@ -56,7 +56,10 @@ full_menu = {**coffee_menu, **food_menu, **book_menu}
 
 # Stores items added to the customer's cart
 cust_basket = {}
-
+# CLEAR SCREEN FUNCTION
+def clear_screen():
+    import os
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 # -----------------------------
 # MENU DISPLAY FUNCTIONS
@@ -73,7 +76,7 @@ def display_numbered_menu(numbered_menu, category_name):
     print(f"\n{category_name} Menu:")
     for num, (name, details) in numbered_menu.items():
         print(
-            f"{num}. {name} - ${details['price']:.2f} "
+            f"{num}. {name} - €{details['price']:.2f} "
             f"({details['description']}) [Stock: {details['stock']}]"
         )
     return numbered_menu
@@ -141,10 +144,10 @@ def view_cart():
     total = 0
     for item, details in cust_basket.items():
         subtotal = details["price"] * details["quantity"]
-        print(f"- {item}: {details['quantity']} x ${details['price']:.2f} = ${subtotal:.2f}")
+        print(f"- {item}: {details['quantity']} x €{details['price']:.2f} = €{subtotal:.2f}")
         total += subtotal
 
-    print(f"\nTotal: ${total:.2f}")
+    print(f"\nTotal: €{total:.2f}")
 
 
 def checkout():
@@ -157,10 +160,10 @@ def checkout():
     total = 0
     for item, details in cust_basket.items():
         subtotal = details["price"] * details["quantity"]
-        print(f"- {item}: {details['quantity']} x ${details['price']:.2f} = ${subtotal:.2f}")
+        print(f"- {item}: {details['quantity']} x €{details['price']:.2f} = €{subtotal:.2f}")
         total += subtotal
 
-    print(f"\nOrder complete. Total paid: ${total:.2f}")
+    print(f"\nOrder complete. Total paid: €{total:.2f}")
     cust_basket.clear()
 
 
@@ -184,18 +187,24 @@ def main_cli():
         choice = input("Select an option (1-8): ").strip()
 
         if choice == '1':
+            clear_screen()
             display_numbered_menu(get_numbered_menu(coffee_menu), "Coffee")
+            
 
         elif choice == '2':
+            clear_screen()
             display_numbered_menu(get_numbered_menu(food_menu), "Food")
 
         elif choice == '3':
+            clear_screen()
             display_numbered_menu(get_numbered_menu(book_menu), "Books")
 
         elif choice == '4':
+            clear_screen()
             view_cart()
 
         elif choice == '5':
+            clear_screen()
             print("\nChoose a category:")
             print("1. Coffee\n2. Food\n3. Books")
             cat_choice = input("Enter category number: ").strip()
@@ -233,7 +242,7 @@ def main_cli():
                         for i, (name, details) in enumerate(cust_basket.items())}
 
             for num, (name, details) in numbered.items():
-                print(f"{num}. {name} - {details['quantity']} x ${details['price']:.2f}")
+                print(f"{num}. {name} - {details['quantity']} x €{details['price']:.2f}")
 
             try:
                 item_num = int(input("Enter item number: "))
